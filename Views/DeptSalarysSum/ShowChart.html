@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>ECahrt 示例</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../../css/app.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.chart {
+				height: 50%;
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			h5 {
+				margin-top: 30px;
+				font-weight: bold;
+			}
+			
+			h5:first-child {
+				margin-top: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>
+				</button>
+				<h1 class="mui-center mui-title">报表分析</h1>
+			</div>
+		</header>
+		<div class="mui-content">
+			<div style="padding-top: 5px; padding-bottom: 5px;" align="center">
+				<button id='btnStartYear' class=" mui-btn mui-btn-blue" >选择对比月份</button> <button type="button" class="mui-btn mui-btn-default" id="btnDb" >对比</button></div>
+			<div class="mui-content-padded">
+				<p style="text-indent: 22px;">
+
+				</p>
+			</div>
+			<div class="mui-content-padded">
+
+				<div class="chart" id="barChart"></div>
+
+				<div class="chart" id="lineChart"></div>
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/highcharts.js"></script>
+		<script type="text/javascript" src="../../js/enjoy.js"></script>
+		<script>
+		
+			$(function() {
+				otherYy='';
+				Enjoy.getPickData('btnStartYear');
+				mui.init({
+					gestureConfig: {
+						tap: true, //默认为true
+						doubletap: true, //默认为false
+						longtap: true, //默认为false
+						swipe: true, //默认为true
+						drag: true, //默认为true
+						hold: false, //默认为false，不监听
+						release: false //默认为false，不监听
+					}
+
+				});
+				mui.plusReady(function() {
+						
+					var self = plus.webview.currentWebview();
+					ksdm = self.ksdm;
+					ksmc = self.ksmc;
+					yy = self.yy;
+					zx = self.zx;
+					
+					getData();
+				});
+
+			})
+
+			function getData() {
+				
+				var url = Enjoy.service.addressPort + "/Modules/QueryReport/DeptBonusSum/Handler/GetDeptBonusSumHandler.ashx";
+				mui.get(
+					url, {
+						strNull: 1
+					},
+					function() {
+						var parameters = {
+							style: 1,
+							dept: ksdm,
+							yy: yy,
+							zx: zx,
+							otherYy:otherYy
+
+						};
+						console.log(ksdm+yy+zx+otherYy);
+						var parameters2 = {
+							style: 2,
+							dept: ksdm,
+							yy: yy,
+							zx: zx,
+							otherYy:otherYy
+						};
+						var parameters3 = {
+							style: 3,
+							dept: ksdm,
+							yy: yy,
+							zx: zx,
+							otherYy:otherYy
+						};
+						var deptName = ksmc;
+						var month = new Array();
+						mui.ajax(url, {
+							type: 'post',
+							data: parameters3,
+							success: function(msg) {
+								plus.nativeUI.showWaiting("等待中....", {
+					padlock: true
+				}); //数据出来前显示等待加载框
+								month = JSON.parse(msg);
+								mui.ajax(url, {
+									data: parameters,
+									success: function(msg) {
+										console.info(month);
+
+										showChart(deptName + "详细指标分析", eval('(' + msg + ')'), month);
+									}
+								})
+								mui.ajax(url, {
+									data: parameters2,
+									success: function(msg) {
+										console.info(JSON.stringify(msg));
+										showChatSum(deptName + "奖金分析", eval('(' + msg + ')'), month);
+									}
+								})
+								plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+							}
+						})
+
+					}, 'json');
+				
+				mui.currentWebview.show(); //显示当前页面    
+			}
+
+			function showChart(name, msg, month) {
+				$('#barChart').highcharts({
+					chart: {
+						type: 'column'
+					},
+					credits: {
+						enabled: true,
+						href: "#",
+						text: ''
+					},
+					title: {
+						text: name
+					},
+					xAxis: {
+						categories: month
+
+					},
+					yAxis: {
+						min: 0,
+						title: {
+							text: '金额（：元）'
+						}
+					},
+					tooltip: {
+						valueSuffix: '：元'
+					},
+					series: msg
+				});
+
+			}
+
+			function showChatSum(name, msg, month) {
+				$('#lineChart').highcharts({
+					chart: {
+						type: 'line'
+					},
+					credits: {
+						enabled: true,
+						href: "#",
+						text: ''
+					},
+					title: {
+						text: name,
+					},
+					xAxis: {
+						categories: month
+					},
+					yAxis: {
+						min: 0,
+						title: {
+							text: '金额（：元）'
+						}
+					},
+					tooltip: {
+						valueSuffix: '：元'
+					},
+					series: msg
+				});
+			}
+         document.getElementById("btnDb").addEventListener('tap',function(){
+         	otherYy=document.getElementById("btnStartYear").innerHTML;
+         	console.log(otherYy);
+         	getData();
+         	
+         })
+		</script>
+	</body>
+
+</html>

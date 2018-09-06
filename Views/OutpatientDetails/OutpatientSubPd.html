@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../bootstrap-table/bootstrap-table.css" />
+		<link rel="stylesheet" href="../../bootstrap-table/bootstrap-table-fixed-columns.css" />
+	</head>
+
+	<body>
+
+		<div class="mui-content" id="alldata">
+			<div id="pullrefresh">
+				<table id="tableData" data-mobile-responsive="false" class=" table table-bordered table-striped" data-pagination="false">
+
+					<thead>
+						<tr>
+							<th data-field="yy"  data-align="right">年月</th>
+							<th data-field="ksdm" data-align="right">科室代码</th>
+							<th data-field="ksmc" data-align="right">科室名称</th>
+							<th data-field="ysdm" data-align="right">医生代码</th>
+							<th data-field="ysmc" data-align="right">医生名称</th>
+							<th data-field="jjdm" data-align="right">计价代码</th>
+							<th data-field="xmmc" data-align="right">项目名称</th>
+							<th data-field="sl" data-align="right">数量</th>
+							<th data-field="dianzhi" data-align="right">点值</th>
+							<th data-field="ze" data-align="right">小计</th>
+						</tr>
+					</thead>
+				</table>
+
+			</div>
+			<div class="mui-content-padded">
+				<ul class="mui-pager">
+					<ul class="mui-pagination">
+						<li class="mui-disabled">
+							<span> &laquo; </span>
+						</li>
+
+						<li id="btnDown">
+							<a href="#">加载数据</a>
+						</li>
+						<li class="mui-disabled">
+							<a href="#">&raquo;</a>
+						</li>
+					</ul>
+
+				</ul>
+				<div v-for="data in footer">
+					<button type="button" class="mui-btn mui-btn-default mui-btn-block">金额合计：{{data.sl}}  奖金合计:{{data.ze}}</button>
+
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/enjoy.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript" src="../../vue/vue.min.js"></script>
+		<script type="text/javascript" src="../../bootstrap-table/bootstrap-table.js"></script>
+		<script type="text/javascript" src="../../bootstrap-table/bootstrap-table-mobile.min.js"></script>
+		<script type="text/javascript" src="../../bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="../../bootstrap-table/fixed-columns.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			var url = Enjoy.service.addressPort + '/Modules/QueryReport/OutpatientDetails/Handler/GetOutpatientDetailHandler.ashx';
+			ksdm = '';
+			yy = '';
+			ysdm = '';
+			sfdm = '';
+
+			function pulldownRefresh() {
+
+				setTimeout(function() {
+					count = 1; //刷新并显示第一页
+					data = {
+						//...,
+						page: count,
+						year: yy,
+						deptId: ksdm.toString(),
+						doctor: ysdm.toString(),
+						project: sfdm.toString()
+
+					};
+					type = 1; //代表下拉刷新
+					toList(data, type); //具体取数据的方法
+				}, 100);
+			};
+
+			function pullupRefresh() {
+
+				setTimeout(function() {
+					//var count=0;
+					count++; //翻下一页
+					data = {
+						page: count,
+						year: yy,
+						deptId: ksdm.toString(),
+						doctor: ysdm.toString(),
+						project: sfdm.toString()
+					};
+					type = 2; //代表上拉加载
+					toList(data, type); //具体取数据的方法
+				}, 100);
+
+			};
+			var vm = new Vue({ //此处采用vue.js
+				el: '#alldata',
+				data: {
+					message: null,
+					footer: null,
+				},
+				created: function() {},
+				methods: {}
+			});
+			var toList = function(data, type) {
+				plus.nativeUI.showWaiting("等待中....", {
+					padlock: true
+				}); //数据出来前显示等待加载框
+				mui.ajax(url, {
+					data: data,
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+
+						if(data.total > 0) {
+
+							if(type == 1) {
+								console.log(JSON.stringify(data));
+								vm.footer = data.footer;
+								$('#tableData').bootstrapTable('destroy');
+								$('#tableData').bootstrapTable({
+									totalRows: data.total,
+									data: data.rows,
+									height: screen.height - 200
+//									fixedColumns:true,
+//									fixedNumber:4
+									
+								});
+							} else if(type == 2) {
+								vm.footer = data.footer;
+								$('#tableData').bootstrapTable('append', data.rows);
+
+							}
+						} else {
+							$('#tableData').bootstrapTable('removeAll');
+							vm.message = '';
+							vm.footer = '';
+						}
+						if(count < (Math.ceil(data.total / 20))) {
+
+							document.getElementById("btnDown").className = "mui-active";
+
+						} else {
+
+							document.getElementById("btnDown").className = "mui-disabled";
+							mui.toast('没有更多数据了');
+
+						}
+						plus.nativeUI.closeWaiting();
+					},
+					error: function(xhr, type, errerThrown) {
+
+						mui.toast('网络异常,请稍候再试');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
+			mui.plusReady(function() {
+
+				pulldownRefresh();
+				document.getElementById("btnDown").addEventListener('tap', function() {
+
+					pullupRefresh();
+				})
+
+			})
+			window.addEventListener('searchData', function(event) {
+				//获得事件参数
+				yy = event.detail.year;
+				ksdm = event.detail.ksdm;
+				ysdm = event.detail.ysdm;
+				sfdm = event.detail.sfdm;
+				pulldownRefresh();
+			});
+		</script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"> </h1>
+			<button type="button" id="btnReset" class="mui-btn mui-btn-default" style="position: absolute;right: 10px;">重置</button>
+		</header>
+		<div class="mui-content">
+			<button id='btnYear' class="mui-btn mui-btn-block">选择年月</button>
+			<button id="btnKsdm" class="mui-btn mui-btn-block">选择科室</button>
+			<button type="button" id="btnSearch" class="mui-btn mui-btn-search mui-btn-default">搜索</button>
+			<label id="lblksbz" hidden="hidden">0</label>
+		</div>
+
+		<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/enjoy.js"></script>
+		<script type="text/javascript">
+			(function($, doc) {
+				$.init();
+						var isAdmin=app.getState().isAdmin;
+				if(isAdmin=="false")
+				{
+					document.getElementById("btnKsdm").classList.add('mui-hidden');
+				}
+				else
+				{
+					document.getElementById("btnKsdm").classList.remove('mui-hidden');
+					
+				}
+				deptId = '';
+				parentPage = '';
+				$.ready(function() {
+
+					var resetButton = document.getElementById("btnReset");
+					resetButton.addEventListener('tap', function() {
+						document.getElementById("btnYear").innerHTML = "选择年月";
+						document.getElementById("btnKsdm").innerHTML = "选择科室";
+
+						document.getElementById("lblksbz").innerText = 0;
+					})
+					document.getElementById("btnSearch").addEventListener('tap', function() {
+						var year = '';
+
+						if(document.getElementById("btnYear").innerHTML != "选择年月") {
+							year = document.getElementById("btnYear").innerText;
+						}
+
+						var self = plus.webview.currentWebview();
+						var name = self.name;
+						var detailPage = null;
+						if(!detailPage) {
+							detailPage = plus.webview.getWebviewById(name);
+						}
+						mui.fire(detailPage, 'searchData', {
+							year: year,
+							ksdm: deptId
+						});
+						mui.back();
+					})
+				});
+			})(mui, document);
+			mui.plusReady(function() {
+
+				//预加载页面
+				var ksdmPage = mui.preload({
+					"id": 'ksdm',
+					"url": 'GetKsdm.html'
+				});
+				var loaded_flag = false;
+				ksdmPage.addEventListener("loaded", function() {
+					loaded_flag = true;
+				});
+				var ksdmButton = document.getElementById("btnKsdm");
+				ksdmButton.addEventListener('tap', function(e) {
+					mui.openWindow({
+						url: 'GetKsdm.html',
+						id: 'GetKsdm',
+						extras: {
+							name: 'SearchNoBz'
+						}
+					})
+				});
+
+			})
+
+			window.addEventListener('getKsdm', function(event) {
+				deptId = event.detail.deptId;
+				deptName = event.detail.deptName;
+				document.getElementById("btnKsdm").innerText = deptName;
+			});
+			Enjoy.getPickData('btnYear');
+		</script>
+	</body>
+
+</html>

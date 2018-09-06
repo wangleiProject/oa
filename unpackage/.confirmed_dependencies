@@ -1,0 +1,1027 @@
+{
+  "login.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.enterfocus.js",
+      "fonts/mui.ttf",
+      "js/enjoy.js",
+      "js/knockout-3.2.0.js",
+      "js/jquery-2.1.1.min.js",
+      "images/user-photo.png",
+      "images/userphoto.png"
+    ],
+    "refer": [
+      "main.html",
+      "guide.html"
+    ]
+  },
+  "main.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/home.js",
+      "js/enjoy.js",
+      "js/jquery-2.1.1.min.js",
+      "css/iconfont.css",
+      "index.html",
+      "fonts/iconfont.ttf",
+      "js/app.js",
+      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+      "libs/easymob-webim-sdk/json2.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/feedback.js",
+      "js/feedback-page.js",
+      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+      "js/mui.view.js",
+      "css/feedback-page.css",
+      "test.html"
+    ],
+    "refer": [
+      "setting.html",
+      "index.html",
+      "nav.html",
+      "login.html",
+      "test.html",
+      "test1.html",
+      "echarts.html",
+      "Views/DoctorsPDSum.html",
+      "Views/DoctorsMain.html",
+      "Views/PdSum/tab-webview-main.html",
+      "Views/PdSum/feedback_ss.html",
+      "Views/PdSum/DoctorsMain.html",
+      "Views/PdSum/123.html",
+      "Views/PdSum/index.html",
+      "Views/PdSum/test.html",
+      "Views/template.html",
+      "Views/PdSum/DoctorsPDSum.html",
+      "Views/ksdm.html",
+      "Views/DoctorsSalarys/DoctorsSalarysMain.html",
+      "Views/ZxSum/DoctorsZxMain.html",
+      "Views/DeptSalarysSum/DeptSalarysSumMain.html",
+      "Views/OutpatientDetails/OutpatientDetailsList.html",
+      "Views/InHospitalDetails/InHospitalDetailsList.html",
+      "Views/OutPatientExec/OutPatientExecList.html",
+      "Views/InHospitalExecDetails/InHospitalExecList.html",
+      "test/index.html",
+      "easyuiDemo.html",
+      "Views/SsfDetails/SsfMain.html",
+      "Views/Yggz/YggzMain.html",
+      "Views/Wzly/WzlyMain.html",
+      "Views/Qtcb/QtcbMain.html",
+      "Views/NurseSalarysSum/NurseSalarysMain.html",
+      "Views/InhospitalDetails/InHospitalDetailsList.html"
+    ]
+  },
+  "setting.html": {
+    "resources": [
+      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+      "libs/easymob-webim-sdk/json2.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/mui.locker.js",
+      "js/feedback.js",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+      "js/mui.view.js",
+      "images/iconfont-tianjia.png",
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "login.html"
+    ]
+  },
+  "index.html": {
+    "resources": [
+      "fonts/iconfont.ttf"
+    ],
+    "refer": []
+  },
+  "nav.html": {
+    "resources": [
+      "js/nav.js"
+    ],
+    "refer": []
+  },
+  "test.html": {
+    "resources": [
+      "js/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "test1.html": {
+    "resources": [
+      "js/vue.min.js",
+      "css/bootstrap.min.css",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "echarts.html": {
+    "resources": [
+      "libs/echarts-all.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "Views/DoctorsPDSum.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/DoctorsMain.html": {
+    "resources": [
+      "Views/DoctorsPDSum.html",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "Views/DoctorsPDSum.html"
+    ]
+  },
+  "Views/PdSum/tab-webview-main.html": {
+    "refer": [
+      "Views/PdSum/tab-webview-subpage-chat.html"
+    ],
+    "resources": []
+  },
+  "Views/PdSum/feedback_ss.html": {
+    "resources": [
+      "Views/PdSum/js/feedback.js",
+      "Views/PdSum/css/feedback.css"
+    ],
+    "refer": []
+  },
+  "Views/PdSum/DoctorsMain.html": {
+    "resources": [
+      "Views/PdSum/DoctorsPDSum.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "Views/PdSum/123.html"
+    ],
+    "refer": [
+      "Views/PdSum/DoctorsPDSum.html",
+      "Views/PdSum/SearchDoctorsSum.html",
+      "Views/picker.html",
+      "Views/PdSum/123.html",
+      "Views/Search.html"
+    ]
+  },
+  "Views/PdSum/DoctorsPDSum.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/enjoy.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/table-scroll.min.js",
+      "js/table-scroll.js",
+      "fonts/mui.ttf",
+      "css/style.css"
+    ],
+    "refer": []
+  },
+  "Views/PdSum/SearchDoctorsSum.html": {
+    "resources": [
+      "js/mui.picker.min.js",
+      "css/mui.picker.min.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.poppicker.js",
+      "css/mui.poppicker.css",
+      "js/mui.picker.js",
+      "js/mui.listpicker.js",
+      "css/mui.picker.css",
+      "Views/css/mui.poppicker.css",
+      "Views/css/mui.picker.css",
+      "Views/script/mui.picker.js",
+      "Views/script/mui.poppicker.js",
+      "js/app.js"
+    ],
+    "refer": [
+      "Views/PdSum/DoctorsMain.html",
+      "Views/ksdm.html"
+    ]
+  },
+  "Views/picker.html": {
+    "resources": [
+      "js/mui.picker.js",
+      "js/mui.poppicker.js",
+      "css/mui.poppicker.css",
+      "css/mui.picker.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.picker.min.js"
+    ],
+    "refer": []
+  },
+  "Views/PdSum/index.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "tableLayout/css/stickysort.css",
+      "tableLayout/js/jquery.stickysort.js",
+      "tableLayout/js/throttle.js",
+      "tableLayout/js/jquery.fixedheadertable.min.js",
+      "tableLayout/css/defaultTheme.css",
+      "tableLayout/css/myTheme.css",
+      "tableLayout/css/960.css",
+      "tableLayout/js/jquery.fixedheadertable.js",
+      "bootstraptable/bootstrap.min.js",
+      "bootstraptable/bootstrap-table.js",
+      "bootstraptable/bootstrap-table.min.css",
+      "bootstraptable/bootstrap-table-locale-all.min.js"
+    ],
+    "refer": []
+  },
+  "Views/PdSum/test.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/PdSum/123.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "Views/template.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/style.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "Views/PdSum/SearchDoctorsSum.html"
+    ]
+  },
+  "Views/ksdm.html": {
+    "resources": [
+      "css/mui.indexedlist.css",
+      "js/mui.indexedlist.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/DoctorsSalarys/Details.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "Views/DoctorsSalarys/PdfDetails.html",
+      "css/icons-extra.css"
+    ],
+    "refer": [
+      "Views/DoctorsSalarys/PdfDetails.html",
+      "Views/DoctorsSalarys/ZxfDetails.html",
+      "Views/DoctorsSalarys/ZyzlDetails.html",
+      "Views/DoctorsSalarys/YggzDetails.html",
+      "Views/DoctorsSalarys/KkcbDetails.html",
+      "Views/DoctorsSalarys/QtcbDetails.html",
+      "Views/Common/YggzDetails.html",
+      "Views/Common/KkcbDetails.html",
+      "Views/Common/QtcbDetails.html",
+      "Views/SearchYear.html"
+    ]
+  },
+  "Views/DoctorsSalarys/DoctorsSalarysMain.html": {
+    "resources": [
+      "Views/DoctorsSalarys/Details.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "Views/DoctorsSalarys/Details.html",
+      "Views/Search.html",
+      "Views/SearchNoYear.html",
+      "Views/SearchNoBz.html"
+    ]
+  },
+  "Views/Search.html": {
+    "resources": [
+      "Views/script/mui.picker.js",
+      "Views/script/mui.poppicker.js",
+      "Views/css/mui.poppicker.css",
+      "Views/css/mui.picker.css",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": [
+      "Views/GetKsdm.html"
+    ]
+  },
+  "Views/GetKsdm.html": {
+    "resources": [
+      "css/mui.indexedlist.css",
+      "js/mui.indexedlist.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/SearchNoYear.html": {
+    "refer": [
+      "Views/GetKsdm.html"
+    ],
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ]
+  },
+  "Views/DoctorsSalarys/PdfDetails.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "fonts/mui.ttf",
+      "Fixed-Header-Table-master/css/defaultTheme.css",
+      "Fixed-Header-Table-master/demo/css/myTheme.css",
+      "Fixed-Header-Table-master/jquery.fixedheadertable.js",
+      "js/jquery.freezeheader.js",
+      "Views/DoctorsSalarys/style.css",
+      "easyui/themes/bootstrap/easyui.css",
+      "easyui/themes/mobile.css",
+      "easyui/jquery.easyui.mobile.js",
+      "easyui/jquery.easyui.min.js",
+      "easyui/themes/bootstrap/images/loading.gif",
+      "jquery-easyui-1.5/jquery.easyui.mobile.js",
+      "jquery-easyui-1.5/jquery.easyui.min.js",
+      "jquery-easyui-1.5/themes/bootstrap/easyui.css",
+      "jquery-easyui-1.5/themes/mobile.css",
+      "jquery-easyui-1.5/themes/bootstrap/images/loading.gif"
+    ],
+    "refer": []
+  },
+  "Views/DoctorsSalarys/ZxfDetails.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js"
+    ],
+    "refer": []
+  },
+  "Views/DoctorsSalarys/ZyzlDetails.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js"
+    ],
+    "refer": []
+  },
+  "Views/DoctorsSalarys/KkcbDetails.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js"
+    ],
+    "refer": []
+  },
+  "Views/DoctorsSalarys/QtcbDetails.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js"
+    ],
+    "refer": []
+  },
+  "Views/SearchNoBz.html": {
+    "refer": [
+      "Views/GetKsdm.html"
+    ],
+    "resources": [
+      "js/app.js",
+      "css/style.css",
+      "fonts/mui.ttf"
+    ]
+  },
+  "Views/ZxSum/DoctorsZxMain.html": {
+    "resources": [
+      "Views/ZxSum/DoctorsZxSum.html",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "Views/ZxSum/DoctorsZxSum.html",
+      "Views/Search.html"
+    ]
+  },
+  "Views/ZxSum/DoctorsZxSum.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "Views/DeptSalarysSum/DeptSalarysSumMain.html": {
+    "resources": [
+      "Views/DeptSalarysSum/DeptSalaryDetails.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "Views/DeptSalarysSum/DeptSalaryDetails.html",
+      "Views/SearchNoBz.html",
+      "Views/SearchWithZx.html"
+    ]
+  },
+  "Views/DeptSalarysSum/DeptSalaryDetails.html": {
+    "resources": [
+      "css/icons-extra.css",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "Views/DeptSalarysSum/ShowChart.html"
+    ]
+  },
+  "Views/DeptSalarysSum/ShowChart.html": {
+    "resources": [
+      "js/highcharts.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/enjoy.js",
+      "css/style.css"
+    ],
+    "refer": []
+  },
+  "Views/SearchWithZx.html": {
+    "resources": [
+      "Views/script/mui.picker.js",
+      "Views/script/mui.poppicker.js",
+      "Views/css/mui.poppicker.css",
+      "Views/css/mui.picker.css",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": [
+      "Views/GetKsdm.html",
+      "Views/Zx.html"
+    ]
+  },
+  "Views/Zx.html": {
+    "resources": [
+      "css/mui.indexedlist.css",
+      "js/mui.indexedlist.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/OutpatientDetails/OutpatientDetailsList.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "Views/OutpatientDetails/OutpatientSubPd.html"
+    ],
+    "refer": [
+      "Views/SearchWithDoctor.html",
+      "Views/OutpatientDetails/OutpatientSubPd.html"
+    ]
+  },
+  "Views/InHospitalDetails/InHospitalDetailsList.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "Views/InHospitalDetails/InHospitalDetailsSub.html"
+    ],
+    "refer": [
+      "Views/InHospitalDetails/InHospitalDetailsSub.html",
+      "Views/SearchWithDoctor.html"
+    ]
+  },
+  "Views/InHospitalExecDetails/InHospitalExecList.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "Views/InHospitalExecDetails/InHospitalExecSub.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "Views/InHospitalExecDetails/InHospitalExecSub.html",
+      "Views/SearchWithDoctor.html"
+    ]
+  },
+  "Views/SearchWithDoctor.html": {
+    "resources": [
+      "Views/script/mui.picker.js",
+      "Views/script/mui.poppicker.js",
+      "Views/css/mui.poppicker.css",
+      "Views/css/mui.picker.css",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": [
+      "Views/GetKsdm.html",
+      "Views/Ysdm.html",
+      "Views/Sfdm.html",
+      "Views/GetSfdm.html"
+    ]
+  },
+  "Views/Ysdm.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/mui.indexedlist.css",
+      "js/enjoy.js",
+      "js/mui.indexedlist.js"
+    ],
+    "refer": []
+  },
+  "Views/OutpatientDetails/OutpatientSubPd.html": {
+    "resources": [
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "FixHeader/js/jquery.stickyheader.js",
+      "FixHeader/js/jquery.ba-throttle-debounce.min.js",
+      "FixHeader/css/component.css",
+      "FixHeader/css/normalize.css",
+      "FixHeader/css/demo.css",
+      "bootstrap-table/bootstrap-table.js",
+      "bootstrap-table/bootstrap-table.css",
+      "bootstrap-table/bootstrap-table-zh-CN.min.js",
+      "bootstrap-table/bootstrap-table-mobile.min.js",
+      "bootstrap-table/fixed-columns.js",
+      "bootstrap-table/bootstrap-table-fixed-columns.css",
+      "js/bootstrap.min.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "Views/OutPatientExec/OutPatientExecList.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "Views/OutPatientExec/OutPatientExecSub.html",
+      "css/bootstrap.min.css"
+    ],
+    "refer": [
+      "Views/OutPatientExec/OutPatientExecSub.html",
+      "Views/SearchWithDoctor.html"
+    ]
+  },
+  "Views/OutPatientExec/OutPatientExecSub.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/enjoy.js",
+      "vue/vue.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "css/bootstrap.min.css"
+    ],
+    "refer": []
+  },
+  "Views/Sfdm.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/mui.indexedlist.css",
+      "js/enjoy.js",
+      "js/mui.indexedlist.js",
+      "js/mui.aysncindexedlist.js",
+      "css/style.css"
+    ],
+    "refer": []
+  },
+  "Views/GetSfdm.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/InHospitalExecDetails/InHospitalExecSub.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/enjoy.js",
+      "vue/vue.min.js"
+    ],
+    "refer": []
+  },
+  "Views/InHospitalDetails/InHospitalDetailsSub.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/enjoy.js",
+      "vue/vue.min.js"
+    ],
+    "refer": []
+  },
+  "test/index.html": {
+    "resources": [
+      "test/js/jquery.scrollFixedTable.js",
+      "test/css/defaultTheme.css",
+      "test/css/layout.css"
+    ],
+    "refer": []
+  },
+  "easyuiDemo.html": {
+    "resources": [
+      "jquery-easyui-1.5/easyui/jquery.easyui.min.js",
+      "jquery-easyui-1.5/easyui/themes/mobile.css",
+      "jquery-easyui-1.5/jquery.min.js",
+      "jquery-easyui-1.5/easyui/jquery.easyui.mobile.js",
+      "css/bootstrap.min.css",
+      "jquery-easyui-1.5/easyui/themes/bootstrap/easyui.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "vue/vue.min.js",
+      "jquery-easyui-1.5/easyui/themes/bootstrap/images/loading.gif",
+      "jquery-easyui-1.5/jquery.easyui.mobile.js",
+      "jquery-easyui-1.5/easyui/themes/metro/easyui.css",
+      "jquery-easyui-1.5/easyui/themes/metro/images/loading.gif",
+      "js/jquery-2.1.1.min.js",
+      "jquery-easyui-1.5/easyui/themes/icon.css",
+      "jquery-easyui-1.5/easyui/themes/icons/search.png"
+    ],
+    "refer": []
+  },
+  "Views/SsfDetails/SsfDetailsSub.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/SsfDetails/SsfMain.html": {
+    "resources": [
+      "Views/SsfDetails/SsfDetailsSub.html",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "Views/SsfDetails/SsfDetailsSub.html",
+      "Views/SearchWithDoctor.html"
+    ]
+  },
+  "Views/Yggz/YggzDetailsSub.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/Yggz/YggzMain.html": {
+    "resources": [
+      "Views/Yggz/YggzDetailsSub.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "Views/Yggz/YggzDetailsSub.html",
+      "Views/SearchWithZxAndName.html"
+    ]
+  },
+  "Views/SearchWithZxAndName.html": {
+    "resources": [
+      "Views/script/mui.picker.js",
+      "Views/script/mui.poppicker.js",
+      "Views/css/mui.poppicker.css",
+      "Views/css/mui.picker.css",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": [
+      "Views/GetKsdm.html",
+      "Views/Zx.html",
+      "Views/Ysdm.html"
+    ]
+  },
+  "Views/Common/KkcbDetails.html": {
+    "resources": [
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js"
+    ],
+    "refer": []
+  },
+  "Views/Wzly/WzlyDetailsSub.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/Wzly/WzlyMain.html": {
+    "resources": [
+      "Views/Wzly/WzlyDetailsSub.html",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "Views/Wzly/WzlyDetailsSub.html",
+      "Views/SearchWzly.html"
+    ]
+  },
+  "Views/SearchWzly.html": {
+    "resources": [
+      "Views/script/mui.picker.js",
+      "Views/script/mui.poppicker.js",
+      "fonts/mui.ttf",
+      "Views/css/mui.poppicker.css",
+      "Views/css/mui.picker.css",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": [
+      "Views/GetKsdm.html"
+    ]
+  },
+  "Views/Qtcb/QtcbMain.html": {
+    "resources": [
+      "Views/Qtcb/QtcbDetailsSub.html",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "Views/Qtcb/QtcbDetailsSub.html",
+      "Views/SearchNoBz.html"
+    ]
+  },
+  "Views/Qtcb/QtcbDetailsSub.html": {
+    "resources": [
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": []
+  },
+  "Views/NurseSalarysSum/NurseSalarysSub.html": {
+    "resources": [
+      "css/icons-extra.css",
+      "css/bootstrap.min.css",
+      "vue/vue.min.js",
+      "js/app.js",
+      "js/jquery-2.1.1.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/enjoy.js"
+    ],
+    "refer": [
+      "Views/SearchYear.html"
+    ]
+  },
+  "Views/NurseSalarysSum/NurseSalarysMain.html": {
+    "resources": [
+      "Views/NurseSalarysSum/NurseSalarysSub.html"
+    ],
+    "refer": [
+      "Views/NurseSalarysSum/NurseSalarysSub.html",
+      "Views/SearchNoBz.html"
+    ]
+  },
+  "guide.html": {
+    "resources": [
+      "js/mui.js"
+    ],
+    "refer": [
+      "main.html"
+    ]
+  },
+  "Views/InhospitalDetails/InHospitalDetailsList.html": {
+    "resources": [
+      "Views/InhospitalDetails/InHospitalDetailsSub.html"
+    ],
+    "refer": [
+      "Views/InhospitalDetails/InHospitalDetailsSub.html"
+    ]
+  }
+}

@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/icons-extra.css" />
+	</head>
+	<style>
+		@media only screen and (min-width:320px) {
+			.mainbody {
+				width: 100%;
+			}
+		}
+		
+		a:link {
+			text-decoration: none;
+		}
+		
+		a:visited {
+			text-decoration: none;
+		}
+		
+		a:hover {
+			text-decoration: none;
+		}
+		
+		a:active {
+			text-decoration: none;
+		}
+		/*textarea {
+			height: 300px;overflow-y:hidden;
+		}*/
+	</style>
+
+	<body>
+
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper ">
+			<div id="app" class=" mui-scroll">
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" v-for="data in message">
+					<li class="mui-table-view-cell" :rel="data.content" @tap="showDetails" :rev="data.username" :res="data.id">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-10">
+								<p class="mui-h6 mui-ellipsis">{{data.content}}</p>
+								<h5>反馈人：{{data.username}}</h5>
+
+							</div>
+							<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+								<span class="mui-h5">{{data.createtime}}</span>
+								<span class="mui-badge mui-badge-primary " id="flag">{{data.bz|newViewFormatter}}</span>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../vue/vue.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/enjoy.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					swipeleft: true, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold: false, //默认为false，不监听
+					release: false //默认为false，不监听
+				},
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: { //下拉刷新
+						auto: false, //可选,默认false.自动下拉刷新一次
+						contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						callback: pulldownRefresh
+					},
+					up: { //上拉加载
+						auto: false, //可选,默认false.自动上拉加载一次
+						contentrefresh: '正在加载...',
+						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: pullupRefresh
+					}
+				},
+
+			});
+			//获取反馈列表地址
+			var url = '';
+			var states = app.getState();
+			var updateUrl = Enjoy.service.address + 'UpdateFeedback';
+			//管理员获取所有数据
+			if(states.isAdmin == "false") {
+				url = Enjoy.service.address + 'GetFeedback';
+			} else { //个人获取自己的数据
+				url = Enjoy.service.address + 'GetAllFeedback';
+			}
+
+			function pulldownRefresh() {
+
+				setTimeout(function() {
+					count = 1; //刷新并显示第一页
+					data = {
+						userid: states.account,
+						page: count,
+						rows: 20
+					};
+					type = 1; //代表下拉刷新
+					toList(data, type); //具体取数据的方法
+				}, 100);
+			};
+
+			function pullupRefresh() {
+
+				setTimeout(function() {
+					//var count=0;
+					count++; //翻下一页
+					data = {
+						userid: states.account,
+						page: count,
+						rows: 20
+					};
+					type = 2; //代表上拉加载
+					toList(data, type); //具体取数据的方法
+				}, 100);
+
+			};
+			Vue.filter('newViewFormatter', function(value) {
+				return value == 1 ? "已读" : "未读";
+
+			});
+			var vm = new Vue({ //此处采用vue.js
+				el: '#pullrefresh',
+				data: {
+					message: null,
+				},
+				created: function() {},
+				methods: {
+					showDetails: function(e) {
+						var a = $(e.currentTarget);
+						var content = $(a).attr('rel');
+						var username = $(a).attr('rev');
+						var id = $(a).attr('res');
+						mui.alert(content, '反馈信息', '确定', function() {
+							var states = app.getState();
+							if(states.isAdmin == "true") {
+								$(a).find("span")[1].innerHTML = "已读";
+								mui.ajax({
+									url: updateUrl,
+									data: {
+										id: id
+									},
+									dataType: 'text',
+									type: 'post',
+									success: function(data) {
+
+									},
+									error: function(xhr, type, thowException) {
+
+										mui.toast(thowException);
+									}
+
+								})
+
+							}
+						})
+					}
+				}
+			});
+			var toList = function(data, type) {
+				plus.nativeUI.showWaiting("等待中....", {
+					padlock: true
+				}); //数据出来前显示等待加载框
+				mui.ajax(url, {
+					data: data,
+					dataType: 'json',
+					type: 'get',
+					timeout: 10000,
+					success: function(data) {
+						if(data.total > 0) {
+							for(var i in data.rows) {
+								var arr = new Array();
+								for(var item in data.rows[i]) {
+									arr[item] = data.rows[i][item];
+								}
+								if(type == 1) { //上拉刷新
+
+									vm.message = data.rows;
+									vm.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面    
+
+								}
+								if(type == 2) { //下拉加载
+									vm.message.push(arr);
+									vm.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面
+
+								}
+							}
+						} else {
+
+							vm.message = '';
+
+							mui.toast("没有数据");
+
+						}
+
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+
+						if(count < (Math.ceil(data.total / 20))) {
+
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+
+						} else {
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+
+						}
+						plus.nativeUI.closeWaiting();
+						mui.currentWebview.show(); //显示当前页面
+
+					},
+					error: function(xhr, type, errerThrown) {
+						//      mui.toast(type);
+						mui.toast('网络异常,请稍候再试');
+
+						plus.nativeUI.closeWaiting();
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+
+					}
+				});
+			};
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+
+					setTimeout(function() {
+
+						mui('#pullrefresh').pullRefresh().pulldownLoading();
+
+					}, 1000);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pulldownLoading();
+
+				});
+			}
+		</script>
+	</body>
+
+</html>

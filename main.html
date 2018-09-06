@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+<style>
+	
+
+
+</style>
+
+
+</head>
+<body>
+    <!-- 主界面不动、菜单移动 -->
+    <!-- 侧滑导航根容器 -->
+    <div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+      <!-- 菜单容器 -->
+      <aside class="mui-off-canvas-left" id="offCanvasSide">
+        <div class="mui-scroll-wrapper">
+          <div class="mui-scroll" id="leftNav">
+           
+          </div>
+        </div>
+      </aside>
+      <!-- 主页面容器 -->
+      <div class="mui-inner-wrap">
+        <!-- 主页面标题 -->
+        <header class="mui-bar mui-bar-nav">
+          <a class="mui-icon mui-action-menu mui-icon-bars mui-pull-left" href="#offCanvasSide"></a>
+          <h1 class="mui-title">贝森绩效管理系统</h1>
+          <button id='setting' class=" mui-pull-right mui-btn-link">设置</button>
+        </header>
+       <!--<nav class="mui-bar mui-bar-tab">
+
+    	    <a class="mui-tab-item mui-active" href="#mainbar">
+    	        <span class="mui-icon mui-icon-home"></span>
+    	        <span class="mui-tab-label">工作台</span>
+    	    </a>
+    	    
+    	    <a class="mui-tab-item" href="#tabSetting">
+    	        <span class="mui-icon mui-icon-gear" id="setting"></span>
+    	        <span class="mui-tab-label" id='setting'>个人设置</span>
+    	    </a>
+    	</nav>-->
+          
+        <div class="mui-content">
+          <div id="mainbar" class="mui-scroll">
+                 <!--主界面具体展示内容--> 
+            
+            <ul class="mui-table-view mui-grid-view mui-grid-9">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="one" >
+                <a >
+                    <span class="mui-icon iconfont icon-drgspingtairuanjianxitong24"  style="color: #D58512;"></span>
+                    <div class="mui-media-body">奖金分析</div>
+                </a>
+            </li>
+             <!--<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a id="two">
+                    <span class="mui-icon iconfont  icon-drgspingtairuanjianxitong25" style="color: #269ABC;"></span>
+                    <div class="mui-media-body">历史奖金</div>
+                </a>
+            </li>-->
+              <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="doctorsSalarys">
+                <a >
+                    <span class="mui-icon iconfont icon-presentation-line-chart" style="color:#2B542C"></span>
+                    <div class="mui-media-body">医生奖金</div>
+                </a>
+            </li>
+              <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="nurseSalarys">
+                <a >
+                    <span class="mui-icon iconfont icon-baobiao1" style="color: #2AC845;"></span>
+                    <div class="mui-media-body">护理奖金</div>
+                </a>
+            </li>
+              <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="tecSalarys">
+                <a >
+                    <span class="mui-icon iconfont icon-drgspingtairuanjianxitong39" style="color: #31B0D5;"></span>
+                    <div class="mui-media-body">医技奖金</div>
+                </a>
+            </li>
+              <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="tecOthers">
+                <a >
+                    <span class="mui-icon iconfont icon-drgspingtairuanjianxitong35" style="color:#ECB100;"></span>
+                    <div class="mui-media-body">非病房奖金</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="asstisOthers">
+                <a >
+                    <span class="mui-icon iconfont icon-drgspingtairuanjianxitong26" style="color:#843534;"></span>
+                    <div class="mui-media-body">医辅奖金</div>
+                </a>
+            </li>
+             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="salarysDetail">
+                <a >
+                    <span class="mui-icon iconfont icon-buchongiconsvg14" style="color:#FF5053;"></span>
+                    <div class="mui-media-body">奖金明细</div>
+                </a>
+            </li>
+              <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="fenxi">
+                <a >
+                    <span class="mui-icon  iconfont icon-tubiao110" style="color: #8A6DE9;"></span>
+                    <div class="mui-media-body">运行分析</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a id="fankui">
+                    <span class="mui-icon mui-icon-info" style="color:#007AFF"></span>
+                    <div class="mui-media-body">反馈</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a id="tongzhi">
+                    <span class="mui-icon mui-icon-chatbubble" style="color:darkorange" ></span>
+                    <div class="mui-media-body">通知</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a id="toupiao">
+                    <span class="mui-icon mui-icon-compose" style="color:blueviolet"></span>
+                    <div class="mui-media-body">投票</div>
+                </a>
+            </li>
+          
+                </ul>
+            
+          </div>
+          
+        </div>  
+        <div class="mui-off-canvas-backdrop"></div>
+      </div>
+    </div>
+    
+ <script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+   
+    <script src="js/enjoy.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/app.js" ></script>
+    <script src="js/home.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>

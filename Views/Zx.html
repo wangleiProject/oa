@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/mui.indexedlist.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				height: 100%;
+				overflow: hidden;
+			}
+			
+			.mui-bar {
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
+			
+			#done.mui-disabled {
+				color: gray;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选择职系</h1>
+			<a id='done' class="mui-btn mui-btn-link mui-pull-right mui-btn-blue mui-disabled">完成</a>
+		</header>
+		<div class="mui-content">
+			<div id='list' class="mui-indexed-list">
+				<div class="mui-indexed-list-search mui-input-row mui-search">
+					<input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索职系">
+				</div>
+				<div class="mui-indexed-list-bar" style="display: none;">
+					<a>A</a>
+					<a>B</a>
+					<a>C</a>
+					<a>D</a>
+					<a>E</a>
+					<a>F</a>
+					<a>G</a>
+					<a>H</a>
+					<a>I</a>
+					<a>J</a>
+					<a>K</a>
+					<a>L</a>
+					<a>M</a>
+					<a>N</a>
+					<a>O</a>
+					<a>P</a>
+					<a>Q</a>
+					<a>R</a>
+					<a>S</a>
+					<a>T</a>
+					<a>U</a>
+					<a>V</a>
+					<a>W</a>
+					<a>X</a>
+					<a>Y</a>
+					<a>Z</a>
+				</div>
+				<div class="mui-indexed-list-alert"></div>
+				<div class="mui-indexed-list-inner" id="main">
+					<div class="mui-indexed-list-empty-alert">没有数据</div>
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.indexedlist.js"></script>
+		<script type="text/javascript" src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/enjoy.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			mui.ready(function() {
+				var appState = app.getState();
+				
+				mui.ajax({
+					type: "post",
+					url: Enjoy.service.addressPort + '/Modules/Basic/EmployeeFiles/Handler/GetStaffGradeHandler.ashx',
+					async: true,
+					data: {
+						userId: appState.account,
+						token: appState.token
+					},
+					success: function(data) {
+						
+						var ksdmData = JSON.parse(data);
+						var menulist = "";
+						menulist += '<ul class="mui-table-view" >';
+						mui.each(ksdmData, function(i, sm) {
+                           
+							menulist += '<li data-value="' + sm.sbxh + '" data-tags="' + sm.zxmc + '" class="mui-table-view-cell mui-indexed-list-item mui-checkbox mui-left"><input  type="checkbox" id="' + sm.sbxh + '">' + sm.zxmc + '</li>';
+
+						});
+						menulist += '</ul>';
+						document.getElementById("main").innerHTML += menulist;
+						window.indexedList = new mui.IndexedList(list);
+					}
+
+				})
+				var header = document.querySelector('header.mui-bar');
+				var list = document.getElementById('list');
+				var done = document.getElementById('done');
+				//calc hieght
+				list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+				//create
+				
+				//done event
+				done.addEventListener('tap', function() {
+					var checkboxArray = [].slice.call(list.querySelectorAll('input[type="checkbox"]'));
+					var checkedValues = [];
+					var checkedTexts = [];
+					checkboxArray.forEach(function(box) {
+						if(box.checked) {
+							checkedValues.push(box.id);
+							checkedTexts.push(box.parentNode.innerText);
+						}
+					});
+					if(checkedValues.length > 0) {
+						var self = plus.webview.currentWebview();
+                        var name = self.name;
+						var detailPage = null;
+						if(!detailPage) {
+							detailPage = plus.webview.getWebviewById(name);
+						}
+						mui.fire(detailPage, 'getZx', {
+							zxId:checkedValues,
+							zxName:checkedTexts
+						});
+						mui.back();
+					} else {
+						mui.alert('没有选择职系');
+					}
+				}, false);
+				mui('.mui-indexed-list-inner').on('change', 'input', function() {
+					var count = list.querySelectorAll('input[type="checkbox"]:checked').length;
+					var value = count ? "完成(" + count + ")" : "完成";
+					done.innerHTML = value;
+					if(count) {
+						if(done.classList.contains("mui-disabled")) {
+							done.classList.remove("mui-disabled");
+						}
+					} else {
+						if(!done.classList.contains("mui-disabled")) {
+							done.classList.add("mui-disabled");
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

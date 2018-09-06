@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" class="feedback">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>投票</title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/feedback.css" />
+		<link rel="stylesheet" type="text/css" href="css/vote.css" </head>
+
+		<body>
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">投票</h1>
+				<button type="button" id="btnEdit" class="mui-btn mui-btn-red mui-btn-outlined" style="position: absolute;top:6px;right: 10px;">修改</button>
+			</header>
+			<div class="mui-content">
+
+				<div id="container">
+
+					<!--<div><span>0</span><a href="">投票</a>PHP</div>
+      <div><span>0</span><a href="">投票</a>Ruby</div>
+      <div><span>0</span><a href="">投票</a>Java</div>
+      <div><span>0</span><a href="">投票</a>ASP</div>
+      <div><span>0</span><a href="">投票</a>Perl</div>
+      <div><span>0</span><a href="">投票</a>ColdFusion</div>-->
+					<div id="mainjson"></div>
+				</div>
+
+			</div>
+			<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+			<script type="text/javascript" src="../../js/mui.min.js"></script>
+			<script type="text/javascript" src="../../js/enjoy.js"></script>
+			<script type="text/javascript" src="../../js/app.js"></script>
+			<script type="text/javascript">
+				mui.init();
+				$(document).ready(function() {
+
+				});
+				mui.plusReady(function() {
+				
+					var states = app.getState();
+					if(states.isAdmin == "false") {
+						document.getElementById("btnEdit").classList.add('mui-hidden');
+					}
+					var old_back = mui.back;
+					mui.back = function() {
+						var wobj = plus.webview.getWebviewById("voteSub");
+						wobj.reload(true);
+						old_back()
+					}
+					var self = plus.webview.currentWebview();
+					var title = self.title;
+					var json = JSON.parse(self.json);
+					var voteId = self.voteId;
+					var vote = self.voteList;
+					var content=self.content;
+					console.log('投票页面id='+voteId);
+						document.getElementById("btnEdit").addEventListener('tap', function() {
+						mui.openWindow({
+								url: 'vote.html',
+								id: 'vote',
+								extras: {
+									title:title,
+									content:content,
+									editid:voteId
+								}
+							}
+
+						)
+					});
+					var htmljson = '<div >' + title + '</div>';
+					for(i = 0; i < json.info.length; i++) {
+						htmljson += '<div>票数：<span>' + json.info[i].value + '</span><button type="button" class="mui-icon mui-icon-checkmarkempty" style="margin-left:10px;margin-right:10px;">投票</button>' + json.info[i].name + '</div>';
+
+					}
+					document.getElementById("container").innerHTML = htmljson;
+					if(vote.indexOf(app.getState().userName) >= 0) {
+						$("#container  button").attr('disabled', 'disabled');
+					} else {
+						$("#container  button").removeAttr('disabled');
+					}
+					$("#container  button").click(function() {
+						$(this).parent().animate({
+							width: '+=2px'
+						}, 500);
+
+						$(this).prev().html(parseInt($(this).prev().html()) + 1);
+						$("#container  button").attr('disabled', 'disabled');
+						scorelist = '';
+						$('#container span').each(function(i) {
+							scorelist += $(this).html() + '|';
+
+						})
+						vote += '|' + app.getState().userName;
+						var url = Enjoy.service.address + 'UpdateScore';
+
+						mui.ajax({
+							url: url,
+							data: {
+								id: voteId,
+								score: scorelist,
+								voter: vote
+							},
+							dataType: 'text',
+							type: 'get',
+							success: function(data) {
+
+								if(data > 0) {
+									alert('投票成功','消息','确定');
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+
+								alert(errorThrown);
+							}
+
+						})
+
+						return false;
+
+					});
+				})
+			</script>
+		</body>
+
+</html>

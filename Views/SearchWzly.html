@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/mui.picker.css" />
+		<link rel="stylesheet" href="css/mui.poppicker.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"> </h1>
+			<button type="button" id="btnReset" class="mui-btn mui-btn-default" style="position: absolute;right: 10px;">重置</button>
+		</header>
+		<div class="mui-content">
+			<button id='btnYear' class="mui-btn mui-btn-block">选择年月</button>
+			<button id='btnDate' class="mui-btn mui-btn-block">出库日期</button>
+			<button id="btnKsdm" class="mui-btn mui-btn-block">选择科室</button>
+			<button id="btnJf" class="mui-btn mui-btn-block">是否计费</button>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>单号</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入单号" id="txtId">
+				</div>
+				<div class="mui-input-row">
+					<label>类别名称</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入类别名称" id="txtStyleName">
+				</div>
+				<div class="mui-input-row">
+					<label>物资编码</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入物资编码" id="txtCode">
+				</div>
+				<div class="mui-input-row">
+					<label>物资名称</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入物资名称" id="txtCodeName">
+				</div>
+			</form>
+
+			<button type="button" id="btnSearch" class="mui-btn mui-btn-search mui-btn-default" style="margin-top: 15px;">搜索</button>
+			<label id="lblJfbz" hidden="hidden"></label>
+		</div>
+
+		<script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="script/mui.picker.js"></script>
+		<script type="text/javascript" src="script/mui.poppicker.js"></script>
+		<script type="text/javascript" src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/enjoy.js"></script>
+		<script type="text/javascript">
+			(function($, doc) {
+				$.init();
+				var isAdmin = app.getState().isAdmin;
+				if(isAdmin == "false") {
+					document.getElementById("btnKsdm").classList.add('mui-hidden');
+		
+				} else {
+					document.getElementById("btnKsdm").classList.remove('mui-hidden');
+				}
+				deptId = '';
+				zxId = '';
+				parentPage = '';
+				$.ready(function() {
+					var jfPicker = new $.PopPicker();
+					jfPicker.setData([{
+						value: "",
+						text: "全部"
+					}, {
+						value: "1",
+						text: "是"
+					}, {
+						value: "0",
+						text: "否"
+					}]);
+					jfPicker.pickers[0].setSelectedIndex(0);
+					var jfButton = document.getElementById("btnJf");
+					jfButton.addEventListener('tap', function(e) {
+						jfPicker.show(function(items) {
+							doc.getElementById("btnJf").innerText = items[0].text;
+							doc.getElementById("lblJfbz").innerHTML = items[0].value;
+						});
+					}, false);
+					var resetButton = document.getElementById("btnReset");
+					resetButton.addEventListener('tap', function() {
+						document.getElementById("btnYear").innerHTML = "选择年月";
+						document.getElementById("btnKsdm").innerHTML = "选择科室";
+						document.getElementById("lblJfbz").innerText = "";
+						document.getElementById("btnDate").innerHTML = "出库日期";
+						document.getElementById("btnJf").innerHTML = "是否计费";
+						document.getElementById("txtCode").value = "";
+						document.getElementById("txtCodeName").value = "";
+						document.getElementById("txtId").value = "";
+						document.getElementById("txtStyleName").value = "";
+					})
+					document.getElementById("btnSearch").addEventListener('tap', function() {
+						var year = ''; //年月
+						var month = ''; //日期
+						var isJf = ''; //是否计费
+						var dh = ''; //单号
+						var lbmc = ''; //类别名称
+						var wzbm = ''; //物资编码
+						var wzmc = ''; //物资名称
+						if(document.getElementById("btnYear").innerHTML != "选择年月") {
+							year = document.getElementById("btnYear").innerText;
+						}
+						if(document.getElementById("btnDate").innerHTML != "出库日期") {
+							month = document.getElementById("btnDate").innerText;
+						}
+						if(document.getElementById("btnJf").innerHTML != "是否计费") {
+							isJf = document.getElementById("lblJfbz").innerText;
+						}
+						if(document.getElementById("txtId").value != '') {
+							dh = document.getElementById("txtId").value;
+						}
+						if(document.getElementById("txtStyleName").value != '') {
+							lbmc = document.getElementById("txtStyleName").value;
+						}
+						if(document.getElementById("txtCode").value != '') {
+							wzbm = document.getElementById("txtCode").value;
+						}
+						if(document.getElementById("txtCodeName").value != '') {
+							wzmc = document.getElementById("txtCodeName").value;
+						}
+						var self = plus.webview.currentWebview();
+						
+						var name = self.name;
+					
+						var detailPage = null;
+						if(!detailPage) {
+							detailPage = plus.webview.getWebviewById(name);
+						}
+						mui.fire(detailPage, 'searchData', {
+							year: year,
+							ksdm: deptId,
+							ckrq:month,
+							sfjf:isJf,
+							dh:dh,
+							lbmc:lbmc,
+							wzbm:wzbm,
+							wzmc:wzmc
+						});
+						mui.back();
+
+					})
+				});
+			})(mui, document);
+			mui.plusReady(function() {
+
+				var ksdmButton = document.getElementById("btnKsdm");
+				ksdmButton.addEventListener('tap', function(e) {
+					mui.openWindow({
+						url: 'GetKsdm.html',
+						id: 'GetKsdm',
+						extras: {
+							name: 'SearchWzly'
+						}
+					})
+				})
+			});
+			window.addEventListener('getKsdm', function(event) {
+				deptId = event.detail.deptId;
+				deptName = event.detail.deptName;
+				document.getElementById("btnKsdm").innerText = deptName;
+			});
+			Enjoy.getPickData('btnYear');
+			Enjoy.getPickTime('btnDate');
+		</script>
+	</body>
+
+</html>

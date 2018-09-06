@@ -1,0 +1,484 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../css/mui.picker.css" />
+		<link rel="stylesheet" href="../css/mui.poppicker.css" />
+		<style>
+			a:link {
+				text-decoration: none;
+			}
+			
+			a:visited {
+				text-decoration: none;
+			}
+			
+			a:hover {
+				text-decoration: none;
+			}
+			
+			a:active {
+				text-decoration: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">材料收支明细</h1>
+		</header>
+		<div class="mui-content">
+			<button id="btnStyle" type="button" class="mui-btn mui-btn-block">选择查看类别</button>
+			<div id="pullrefresh" class="mui-hidden">
+				<div id="app">
+
+					<div style="overflow-x: scroll;">
+
+						<table id="tableData" class=" table table-bordered table-striped">
+
+							<thead>
+								<tr>
+									<th>
+										年月
+									</th>
+									<th>
+										病人编码
+									</th>
+									<th>
+										病人姓名
+									</th>
+									<th>
+										收费代码
+									</th>
+									<th>
+										收费名称
+									</th>
+									<th>
+										单价
+									</th>
+									<th>
+										数量
+									</th>
+									<th>
+										金额
+									</th>
+								</tr>
+							</thead>
+
+							<tbody v-for="data in message">
+
+								<tr>
+									<td>{{data.yy}}</td>
+									<td>{{data.brid}}</td>
+									<td>{{data.brxm}}</td>
+									<td>{{data.sfdm}}</td>
+									<td>{{data.sfmc}}</td>
+									<td>{{data.dj}}</td>
+									<td>{{data.sl}}</td>
+									<td>{{data.je}}</td>
+								</tr>
+							</tbody>
+
+						</table>
+
+					</div>
+					<div class="mui-content-padded">
+						<div v-for="data in footer">
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">合计：{{data.je}}</button>
+
+						</div>
+						<ul class="mui-pager">
+
+							<li class="mui-active" id="btnDown">
+								<a>
+									下一页
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<div id="lymxDiv">
+				<div id="lymx">
+
+					<div style="overflow-x: scroll;">
+
+						<table id="lyData" class=" table table-bordered table-striped">
+
+							<thead>
+								<tr>
+									<th>
+										年月
+									</th>
+									<th>
+										科室代码
+									</th>
+									<th>
+										科室名称
+									</th>
+									<th>
+										数量
+									</th>
+									<th>
+										单价
+									</th>
+									<th>
+										物资类别
+									</th>
+									<th>
+										物资名称
+									</th>
+									<th>
+										是否计费
+									</th>
+									<th>
+										物资编码
+									</th>
+									<th>
+										物资名称
+									</th>
+									<th>
+										出库日期
+									</th>
+									<th>
+										单号
+									</th>
+									<th>
+										领用金额
+									</th>
+								</tr>
+							</thead>
+
+							<tbody v-for="data in message">
+
+								<tr>
+									<td>{{data.yy}}</td>
+									<td>{{data.ksdm}}</td>
+									<td>{{data.ksmc}}</td>
+									<td>{{data.sl}}</td>
+									<td>{{data.dj}}</td>
+									<td>{{data.wzlb}}</td>
+									<td>{{data.lbmc}}</td>
+									<td>{{data.jfmc}}</td>
+									<td>{{data.wzbm}}</td>
+									<td>{{data.wzmc}}</td>
+									<td>{{data.ckrq}}</td>
+									<td>{{data.dh}}</td>
+									<td>{{data.je}}</td>
+								</tr>
+							</tbody>
+
+						</table>
+
+					</div>
+					<div class="mui-content-padded">
+						<div v-for="data in footer">
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">合计：{{data.je}}</button>
+
+						</div>
+						<ul class="mui-pager">
+
+							<li class="mui-active" id="btnDown2">
+								<a>
+									下一页
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/enjoy.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript" src="../../vue/vue.min.js"></script>
+		<script type="text/javascript" src="../script/mui.picker.js"></script>
+		<script type="text/javascript" src="../script/mui.poppicker.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			var url = Enjoy.service.addressPort + '/Modules/Basic/HomeDisplay/Handler/xsjemx.ashx';
+			var lyurl = Enjoy.service.addressPort + '/Modules/Basic/HomeDisplay/Handler/kkcbmx.ashx';
+			ksdm = '';
+			yy = '';
+
+			function pulldownRefresh() {
+
+				setTimeout(function() {
+					count = 1; //刷新并显示第一页
+					data = {
+						//...,
+						page: count,
+						yy: yy,
+						ksdm: ksdm
+
+					};
+					type = 1; //代表下拉刷新
+					toList(data, type); //具体取数据的方法
+				}, 100);
+			};
+
+			function pullupRefresh() {
+
+				setTimeout(function() {
+					//var count=0;
+					count++; //翻下一页
+					data = {
+						page: count,
+						yy: yy,
+						ksdm: ksdm
+					};
+					type = 2; //代表上拉加载
+					toList(data, type); //具体取数据的方法
+				}, 100);
+
+			};
+
+			var vm = new Vue({ //此处采用vue.js
+				el: '#pullrefresh',
+				data: {
+					message: null,
+					footer: null,
+				},
+				created: function() {},
+				methods: {}
+			});
+			var toList = function(data, type) {
+				plus.nativeUI.showWaiting("等待中....", {
+					padlock: true
+				}); //数据出来前显示等待加载框
+				mui.ajax(url, {
+					data: data,
+					dataType: 'json',
+					type: 'get',
+					timeout: 100000,
+					success: function(data) {
+						if(data.total > 0) {
+							for(var i in data.rows) {
+								var arr = new Array();
+								for(var item in data.rows[i]) {
+									arr[item] = data.rows[i][item];
+								}
+								if(type == 1) { //上拉刷新
+
+									vm.message = data.rows;
+									vm.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面    
+
+								}
+								if(type == 2) { //下拉加载
+									vm.message.push(arr);
+									vm.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面
+
+								}
+							}
+						} else {
+
+							vm.message = '';
+							vm.footer = '';
+						}
+
+						if(count < (Math.ceil(data.total / 20))) {
+
+							document.getElementById("btnDown").className = "mui-active";
+
+						} else {
+
+							document.getElementById("btnDown").className = "mui-disabled";
+							mui.toast('没有更多数据了');
+
+						}
+						plus.nativeUI.closeWaiting();
+						//mui.currentWebview.show(); //显示当前页面
+
+					},
+					error: function(xhr, type, errerThrown) {
+						//      mui.toast(type);
+						mui.toast('网络异常,请稍候再试');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			};
+			//-------------------------处理领用明细----------------------------------------------------------------
+			function pulldownRefresh2() {
+
+				setTimeout(function() {
+					count = 1; //刷新并显示第一页
+					data = {
+						//...,
+						page: count,
+						yy: yy,
+						ksdm: ksdm,
+						lb: 'huli',
+						type: 2
+
+					};
+					type = 1; //代表下拉刷新
+					toList2(data, type); //具体取数据的方法
+				}, 100);
+			};
+
+			function pullupRefresh2() {
+
+				setTimeout(function() {
+					//var count=0;
+					count++; //翻下一页
+					data = {
+						page: count,
+						yy: yy,
+						ksdm: ksdm,
+						lb: 'huli',
+						type: 2
+					};
+					type = 2; //代表上拉加载
+					toList2(data, type); //具体取数据的方法
+				}, 100);
+
+			};
+
+			var vm2 = new Vue({ //此处采用vue.js
+				el: '#lymxDiv',
+				data: {
+					message: null,
+					footer: null,
+				},
+				created: function() {},
+				methods: {}
+			});
+			var toList2 = function(data, type) {
+				plus.nativeUI.showWaiting("等待中....", {
+					padlock: true
+				}); //数据出来前显示等待加载框
+				mui.ajax(lyurl, {
+					data: data,
+					dataType: 'json',
+					type: 'get',
+					timeout: 100000,
+					success: function(data) {
+						if(data.total > 0) {
+							for(var i in data.rows) {
+								var arr = new Array();
+								for(var item in data.rows[i]) {
+									arr[item] = data.rows[i][item];
+								}
+								if(type == 1) { //上拉刷新
+
+									vm2.message = data.rows;
+									vm2.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面    
+
+								}
+								if(type == 2) { //下拉加载
+									vm2.message.push(arr);
+									vm2.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面
+
+								}
+							}
+						} else {
+
+							vm2.message = '';
+							vm2.footer = '';
+						}
+
+						if(count < (Math.ceil(data.total / 20))) {
+
+							document.getElementById("btnDown2").className = "mui-active";
+
+						} else {
+
+							document.getElementById("btnDown2").className = "mui-disabled";
+							mui.toast('没有更多数据了');
+
+						}
+						plus.nativeUI.closeWaiting();
+						//mui.currentWebview.show(); //显示当前页面
+
+					},
+					error: function(xhr, type, errerThrown) {
+						//      mui.toast(type);
+						mui.toast('网络异常,请稍候再试');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			};
+
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				ksdm = self.ksdm;
+				yy = self.yy;
+				pulldownRefresh2();
+				document.getElementById("btnDown").addEventListener('tap', function() {
+					if(this.className == "mui-disabled") {
+						mui.toast('没有更多数据了');
+						return;
+					} else {
+						pullupRefresh();
+					}
+				})
+				document.getElementById("btnDown2").addEventListener('tap', function() {
+					if(this.className == "mui-disabled") {
+						mui.toast('没有更多数据了');
+						return;
+					} else {
+						pullupRefresh2();
+					}
+				})
+
+			})
+			mui.ready(function() {
+
+				var mzbzPicker = new mui.PopPicker();
+				mzbzPicker.setData([{
+					value: "1",
+					text: "销售金额"
+				}, {
+					value: "2",
+					text: "领用金额"
+				}]);
+				mzbzPicker.pickers[0].setSelectedIndex(0);
+				sl = 0;
+				var btnButton = document.getElementById("btnStyle");
+				btnButton.addEventListener('tap', function(e) {
+					mzbzPicker.show(function(items) {
+						document.getElementById("btnStyle").innerText = items[0].text;
+						if(items[0].value == "1") {
+							
+							if(sl == 0) {
+								document.getElementById("pullrefresh").classList.remove('mui-hidden');
+								document.getElementById("lymxDiv").classList.add('mui-hidden');
+								pulldownRefresh();
+								sl++;
+								
+							} else {
+								document.getElementById("pullrefresh").classList.remove('mui-hidden');
+								document.getElementById("lymxDiv").classList.add('mui-hidden');
+
+							}
+						} else {
+							document.getElementById("lymxDiv").classList.remove('mui-hidden');
+							document.getElementById("pullrefresh").classList.add('mui-hidden');
+							//pulldownRefresh();
+
+						}
+					});
+				}, false);
+			})
+		</script>
+	</body>
+
+</html>

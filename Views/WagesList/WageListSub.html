@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/style.css" />
+
+	</head>
+
+	<body>
+
+		<div class="mui-content">
+			<div id="pullrefresh">
+				<div id="app">
+
+					<div style="overflow-x: scroll;">
+
+						<table id="tableData" class=" table table-bordered table-striped">
+
+							<thead>
+								<tr>
+									<th>
+										年月
+									</th>
+									<th>
+										职系
+									</th>
+									<th>
+										科室名称
+									</th>
+									<th>
+										人员系数
+									</th>
+									<th>
+										核算金额
+									</th>
+									<th>
+										应发合计
+									</th>
+									<th>
+										应发人均
+									</th>
+									<th>
+										考核分数
+									</th>
+									<th>
+										实发金额
+									</th>
+									<th>
+										实发人均
+									</th>
+									<th>
+										职补
+									</th>
+									<th>
+										最终金额
+									</th>
+								</tr>
+							</thead>
+
+							<tbody v-for="data in message">
+
+								<tr>
+									<td>{{data.yy}}</td>
+									<td>{{data.zxmc}}</td>
+									<td style="color: indianred;">
+										<a @tap="showChart" :rel="data.ksdm" :yy="data.yy" :zx="data.zx">{{data.ksmc}}</a>
+									</td>
+									<td>{{data.jxdz}}</td>
+									<td>{{data.ysje}}</td>
+									<td>{{data.yfze}}</td>
+									<td>{{data.jxrj}}</td>
+									<td>{{data.khjg}}</td>
+									<td>{{data.jxgz}}</td>
+									<td>{{data.rypj}}</td>
+									<td>{{data.zb}}</td>
+									<td>{{data.hjje}}</td>
+								</tr>
+							</tbody>
+
+						</table>
+
+					</div>
+					<div class="mui-content-padded">
+						<div v-for="data in footer">
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">人员系数合计：{{data.jxdz}}</button>
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">核算金额合计：{{data.ysje}}</button>
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">应发金额合计：{{data.yfze}}</button>
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">实发金额合计：{{data.jxgz}}</button>
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">职补金额合计：{{data.zb}}</button>
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">最终金额合计：{{data.hjje}}</button>
+						</div>
+						<ul class="mui-pager">
+
+							<li class="mui-active" id="btnDown">
+								<a>
+									下一页
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/enjoy.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript" src="../../vue/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			var url = Enjoy.service.addressPort + '/Modules/QueryReport/PerformanceSalarySingle/Handler/PerformanceSalarySingleHandler.ashx';
+			ksdm = '';
+			yy = '';
+			zx = '';
+
+			function pulldownRefresh() {
+
+				setTimeout(function() {
+					count = 1; //刷新并显示第一页
+					data = {
+						//...,
+						page: count,
+						year: yy,
+						deptId: ksdm.toString(),
+						deptStaffGride: zx.toString(),
+
+					};
+					type = 1; //代表下拉刷新
+					toList(data, type); //具体取数据的方法
+				}, 100);
+			};
+
+			function pullupRefresh() {
+
+				setTimeout(function() {
+					//var count=0;
+					count++; //翻下一页
+					data = {
+						page: count,
+						year: yy,
+						deptId: ksdm.toString(),
+						deptStaffGride: zx.toString(),
+					};
+					type = 2; //代表上拉加载
+					toList(data, type); //具体取数据的方法
+				}, 100);
+
+			};
+
+			var vm = new Vue({ //此处采用vue.js
+				el: '#pullrefresh',
+				data: {
+					message: null,
+					footer: null,
+				},
+				created: function() {},
+				methods: {
+					showChart: function(e) {
+						var item = e.currentTarget;
+						var yy = item.getAttribute('yy');
+						var ksdm = item.getAttribute('rel');
+						var zx = item.getAttribute('zx');
+
+						mui.openWindow({
+							url: 'ShowCharts.html',
+							id: 'ShowCharts',
+							extras: {
+								ksdm: ksdm,
+								yy: yy,
+								zx: zx
+							}
+						});
+
+					}
+				}
+			});
+			var toList = function(data, type) {
+				plus.nativeUI.showWaiting("等待中....", {
+					padlock: true
+				}); //数据出来前显示等待加载框
+				mui.ajax(url, {
+					data: data,
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.total > 0) {
+							for(var i in data.rows) {
+								var arr = new Array();
+								for(var item in data.rows[i]) {
+									arr[item] = data.rows[i][item];
+								}
+								if(type == 1) { //上拉刷新
+
+									vm.message = data.rows;
+									vm.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面    
+
+								}
+								if(type == 2) { //下拉加载
+									vm.message.push(arr);
+									vm.footer = data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面
+
+								}
+							}
+						} else {
+
+							vm.message = '';
+							vm.footer = '';
+						}
+
+						if(count < (Math.ceil(data.total / 20))) {
+
+							document.getElementById("btnDown").className = "mui-active";
+
+						} else {
+
+							document.getElementById("btnDown").className = "mui-disabled";
+							mui.toast('没有更多数据了');
+
+						}
+						plus.nativeUI.closeWaiting();
+						//mui.currentWebview.show(); //显示当前页面
+
+					},
+					error: function(xhr, type, errerThrown) {
+						      mui.toast('网络异常，请退出程序重新登录');
+					
+						
+					}
+				});
+			};
+
+			mui.plusReady(function() {
+				//				var self = plus.webview.currentWebview();
+				//				ksdm = self.ksdm;
+				//				yy = self.yy;
+				pulldownRefresh();
+				document.getElementById("btnDown").addEventListener('tap', function() {
+					if(this.className == "mui-disabled") {
+						mui.toast('没有更多数据了');
+						return;
+					} else {
+						pullupRefresh();
+					}
+				});
+
+			})
+			window.addEventListener('searchData', function(event) {
+				//获得事件参数
+				yy = event.detail.year;
+				ksdm = event.detail.ksdm;
+				zx = event.detail.zx;
+				pulldownRefresh();
+			});
+		</script>
+	</body>
+
+</html>

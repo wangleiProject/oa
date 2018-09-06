@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<style>
+			a:link {
+			text-decoration: none;
+		}
+		
+		a:visited {
+			text-decoration: none;
+		}
+		
+		a:hover {
+			text-decoration: none;
+		}
+		
+		a:active {
+			text-decoration: none;
+		}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">中医特色治疗明细</h1>
+		</header>
+		<div class="mui-content">
+			<div id="pullrefresh">
+				<div id="app">
+
+					<div style="overflow-x: scroll;">
+
+						<table id="tableData" class=" table table-bordered table-striped">
+
+							<thead>
+								<tr>
+									<th>
+										年月
+									</th>
+									<th>
+										科室代码
+									</th>
+									<th>
+										科室名称
+									</th>
+									<th>
+										病人姓名
+									</th>
+									<th>
+										收费名称
+									</th>
+									<th>
+										数量
+									</th>
+									<th>
+										单价
+									</th>
+									<th>
+										金额
+									</th>
+									<th>
+										比率
+									</th>
+									<th>
+										点值
+									</th>
+								</tr>
+							</thead>
+
+							<tbody v-for="data in message">
+								
+								<tr >
+									<td >{{data.yy}}</td>
+									<td >{{data.ksdm}}</td>
+									<td>{{data.ksmc}}</td>
+									<td>{{data.brxm}}</td>
+									<td>{{data.sfmc}}</td>
+									<td>{{data.sl}}</td>
+									<td>{{data.dj}}</td>
+									<td>{{data.je}}</td>
+									<td>{{data.pdbl}}</td>
+									<td>{{data.jj}}</td>
+								</tr>
+							</tbody>
+							
+						</table>
+						
+
+					</div>
+					<div class="mui-content-padded">
+						<div v-for="data in footer">
+							<button type="button" class="mui-btn mui-btn-default mui-btn-block">合计金额：{{data.je}}合计点值：{{data.jj}}</button>
+								
+									
+								
+							</div>
+						<ul class="mui-pager">
+
+							<li class="mui-active" id="btnDown">
+								<a>
+									下一页
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/enjoy.js"></script>
+		<script type="text/javascript" src="../../js/app.js"></script>
+		<script type="text/javascript" src="../../vue/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+
+			var url = Enjoy.service.addressPort + '/Modules/Basic/HomeDisplay/Handler/GetDoctorsIncomeHandler.ashx';
+			ksdm = '';
+			yy = '';
+
+			function pulldownRefresh() {
+
+				setTimeout(function() {
+					count = 1; //刷新并显示第一页
+					data = {
+						//...,
+						page: count,
+						yy: yy,
+						ksdm: ksdm
+
+					};
+					type = 1; //代表下拉刷新
+					toList(data, type); //具体取数据的方法
+				}, 100);
+			};
+
+			function pullupRefresh() {
+
+				setTimeout(function() {
+					//var count=0;
+					count++; //翻下一页
+					data = {
+						page: count,
+						yy: yy,
+						ksdm: ksdm
+					};
+					type = 2; //代表上拉加载
+					toList(data, type); //具体取数据的方法
+				}, 100);
+
+			};
+
+			var vm = new Vue({ //此处采用vue.js
+				el: '#pullrefresh',
+				data: {
+					message: null,
+					footer:null,
+				},
+				created: function() {},
+				methods: {}
+			});
+			var toList = function(data, type) {
+				plus.nativeUI.showWaiting("等待中....", {
+					padlock: true
+				}); //数据出来前显示等待加载框
+				mui.ajax(url, {
+					data: data,
+					dataType: 'json',
+					type: 'get',
+					timeout: 30000,
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.total > 0) {
+							for(var i in data.rows) {
+								var arr = new Array();
+								for(var item in data.rows[i]) {
+									arr[item] = data.rows[i][item];
+								}
+								if(type == 1) { //上拉刷新
+
+									vm.message = data.rows;
+									vm.footer=data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面    
+
+								}
+								if(type == 2) { //下拉加载
+									vm.message.push(arr);
+									vm.footer=data.footer;
+									plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+									mui.currentWebview.show(); //显示当前页面
+
+								}
+							}
+						} else {
+
+							vm.message = '';
+							vm.footer='';
+						}
+
+						if(count < (Math.ceil(data.total / 20))) {
+
+							document.getElementById("btnDown").className = "mui-active";
+
+						} else {
+
+							document.getElementById("btnDown").className = "mui-disabled";
+							mui.toast('没有更多数据了');
+
+						}
+						plus.nativeUI.closeWaiting();
+						//mui.currentWebview.show(); //显示当前页面
+
+					},
+					error: function(xhr, type, errerThrown) {
+						//      mui.toast(type);
+						mui.toast('网络异常,请稍候再试');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			};
+
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				ksdm = self.ksdm;
+				yy = self.yy;
+				pulldownRefresh();
+				document.getElementById("btnDown").addEventListener('tap', function() {
+					if(this.className == "mui-disabled") {
+						mui.toast('没有更多数据了');
+						return;
+					} else {
+						pullupRefresh();
+					}
+				})
+
+			})
+		</script>
+	</body>
+
+</html>

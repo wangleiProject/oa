@@ -1,0 +1,84 @@
+.ui-page-login,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.mui-content {
+	height: 100%;
+}
+
+
+/*自定义字体*/
+
+.enjoy-text-small {
+	color: #909090;
+	font-size: 12px;
+}
+
+#mui-right-search {
+	float: right;
+	margin-top: 10px;
+}
+
+.mui-btn-search {
+	width: 90%;
+	border-radius: 10px;
+	margin-left: 17px;
+}
+
+.mui-btn-default {
+	color:#843534;
+	border-color:#D43F3A;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);  来点阴影~ 
+	font: 16px/1.5 'Microsoft Yahei';
+	border-radius: 10px;
+	/*transform: scale(1.2);*/
+}
+
+table {
+	margin: auto;
+	font: 16px/1.5 'Microsoft Yahei';
+	/* 默认字体丑爆了 
+	/*box-shadow: 0 0 20px rgba(0,0,0,0.6);  /*来点阴影~ */
+	*/ border-radius: 10px;
+}
+
+td:nth-child(2) {
+	text-align: center;
+}
+
+td {
+	white-space: nowrap;
+	/* !!!!----这段代码是关键----!!!! */
+	text-align: center;
+}
+
+th {
+	white-space: nowrap;
+	/* !!!!----这段代码是关键----!!!! */
+	text-align: center;
+	
+	background:#666666;
+	color: white;
+}
+
+tr:hover {
+    color:red;
+  //  transform: scale(1.2);  不加点特效不舒服 
+}
+
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}

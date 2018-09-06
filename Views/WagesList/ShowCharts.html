@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>报表分析</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<style>
+			.chart {
+				height: 50%;
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			h5 {
+				margin-top: 30px;
+				font-weight: bold;
+			}
+			
+			h5:first-child {
+				margin-top: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>
+				</button>
+				<h1 class="mui-center mui-title">报表分析</h1>
+			</div>
+		</header>
+		<div class="mui-content">
+			<div class="chart" id="barChart"></div>
+			<div style="padding-top: 5px; padding-bottom: 5px;" align="center">
+				<button id='btnStartYear' class=" mui-btn mui-btn-blue mui-btn-block">选择对比月份</button>
+				<button id='btnKsdm' class=" mui-btn mui-btn-blue mui-btn-block">选择对比科室</button><button type="button" class="mui-btn mui-btn-block mui-btn-default" id="btnDb">对比</button></div>
+			<div class="mui-content-padded">
+				<p style="text-indent: 22px;">
+
+				</p>
+			</div>
+			<div class="mui-content-padded">
+
+				<div class="chart" id="lineChart"></div>
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/highcharts.js"></script>
+		<script src="https://img.hcharts.cn/highcharts/highcharts-3d.js"></script>
+		<!--		<script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>-->
+		<script type="text/javascript" src="../../js/enjoy.js"></script>
+		<script>
+			$(function() {
+				//对比月份
+				otherYy = '';
+				//对比科室
+				deptId = '';
+				deptName = '';
+				info = {};
+				url = Enjoy.service.addressPort + "/Modules/QueryReport/PerformanceSalarySingle/Handler/PerformanceSalarySingleHandler.ashx";
+				chartUrl=Enjoy.service.addressPort + "/Modules/QueryReport/PerformanceSalarySingle/Handler/PerformanceSalarySingleHandler.ashx";
+				Enjoy.getPickData('btnStartYear');
+				var ksdmButton = document.getElementById("btnKsdm");
+				ksdmButton.addEventListener('tap', function(e) {
+					mui.openWindow({
+						url: '../GetKsdm.html',
+						id: 'GetKsdm',
+						extras: {
+							name: 'ShowCharts'
+						}
+					})
+				});
+				mui.init({
+					gestureConfig: {
+						tap: true, //默认为true
+						doubletap: true, //默认为false
+						longtap: true, //默认为false
+						swipe: true, //默认为true
+						drag: true, //默认为true
+						hold: false, //默认为false，不监听
+						release: false //默认为false，不监听
+					}
+
+				});
+				mui.plusReady(function() {
+
+					var self = plus.webview.currentWebview();
+					ksdm = self.ksdm;
+					yy = self.yy;
+					zx = self.zx;
+					url = url + "?year='" + yy + "'&zx=" + zx + "&ksdm=" + ksdm;
+					getData();
+				});
+
+			})
+
+			function getData() {
+				mui.ajax({
+					url: url,
+					data: {},
+					dataType: 'text',
+					type: 'get',
+					contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+					success: function(msg) {
+						showChart(msg);
+					},
+					error: function(xhr, type, error) {
+
+						console.log(error);
+					}
+
+				})
+
+				mui.currentWebview.show(); //显示当前页面    
+			}
+
+			function showChart(data) {
+				$('#barChart').highcharts({
+					chart: {
+						type: 'pie',
+						options3d: {
+							enabled: true,
+							alpha: 45
+						}
+					},
+					credits: {
+						enabled: true,
+						href: "#",
+						text: ''
+					},
+					title: {
+						text: '奖金数据分析'
+					},
+					subtitle: {
+						text: yy
+					},
+					plotOptions: {
+						pie: {
+							innerSize: 100,
+							depth: 45
+						}
+					},
+					series: eval('(' + data + ')')
+				});
+
+			}
+
+			function getDataDetails() {
+				
+				var parameters = {
+					style: 1,
+					otherDept: deptId.toString(),
+					yy: yy,
+					zx: zx,
+					dbyy: otherYy,
+					currentDept:ksdm
+
+				};
+				var parameters2 = {
+					style: 2,
+					otherDept: deptId.toString(),
+					yy: yy,
+					zx: zx,
+					dbyy: otherYy,
+					currentDept:ksdm
+				};
+				var month = new Array();
+				mui.ajax(chartUrl, {
+					type: 'get',
+					data: parameters2,
+					success: function(msg) {
+						plus.nativeUI.showWaiting("等待中....", {
+							padlock: true
+						}); //数据出来前显示等待加载框
+						month = JSON.parse(msg);
+
+						mui.ajax(chartUrl, {
+							data: parameters,
+							type:'get',
+							success: function(msg) {
+															console.log(msg);
+								showChartDetails("详细指标分析", eval('(' + msg + ')'), month);
+							},
+							error:function(xhr,type,errorThrown)
+							{
+								console.log(errorThrown);
+							}
+						})
+						plus.nativeUI.closeWaiting(); //数据渲染完毕，关闭加载框
+					},
+					error:function(xhr,type,errorThrown)
+					{
+						console.log(errorThrown);
+					}
+				})
+
+				mui.currentWebview.show(); //显示当前页面    
+			}
+
+			function showChartDetails(name, msg, month) {
+				$('#lineChart').highcharts({
+					chart: {
+						type: 'column'
+					},
+					credits: {
+						enabled: true,
+						href: "#",
+						text: ''
+					},
+					title: {
+						text: name
+					},
+					xAxis: {
+						categories: month
+
+					},
+					yAxis: {
+						min: 0,
+						title: {
+							text: '金额（：元）'
+						}
+					},
+					tooltip: {
+						valueSuffix: '：元'
+					},
+					series: msg
+				});
+
+			}
+			document.getElementById("btnDb").addEventListener('tap', function() {
+				if(document.getElementById("btnStartYear").innerHTML == "选择对比月份") {
+					mui.toast('请选择对比月份');
+					return;
+				}
+				if(document.getElementById("btnKsdm").innerHTML == "选择对比科室") {
+					mui.toast('请选择对比科室');
+					return;
+				}
+				otherYy = document.getElementById("btnStartYear").innerHTML;
+				getDataDetails();
+
+			})
+			window.addEventListener('getKsdm', function(event) {
+				deptId = event.detail.deptId;
+				deptName = event.detail.deptName;
+				document.getElementById("btnKsdm").innerText = deptName;
+			});
+		</script>
+	</body>
+
+</html>
